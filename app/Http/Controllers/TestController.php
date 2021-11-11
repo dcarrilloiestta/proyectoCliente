@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\cliente;
+use App\Models\bucliente;
+use App\Models\bucliente2;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -26,7 +28,18 @@ class TestController extends Controller
             'nombre' => $request->nombre,
             'slug' => Str::slug($request->nombre),
             'email' => strtolower($request->email)
-        ]);
+        ]);        
+        $marca = $request->nombre;
+        bucliente::create(['marca' => $marca]);
+
+        //LO VIMOS EN POO
+        $otrobackup = new bucliente2;
+        $otrobackup->nombre = $request->nombre;
+        $otrobackup->email = $request->email;
+
+        $otrobackup->save();
+
+
         $this->mensaje('message', 'Cliente creado correctamente!');
         return redirect()->back();
     }
